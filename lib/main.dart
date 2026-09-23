@@ -93,6 +93,8 @@ const List<Product> kProducts = [
   ),
 ];
 
+const double _largeScreenMinWidth = 600.0;
+
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});
 
@@ -100,14 +102,36 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Products')),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(12),
-        itemCount: kProducts.length,
-        itemBuilder: (context, index) {
-          final product = kProducts[index];
-          return ProductCard(product: product);
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth > _largeScreenMinWidth) {
+            return _buildGrid();
+          }
+          return _buildList();
         },
       ),
+    );
+  }
+
+  Widget _buildList() {
+    return ListView.builder(
+      padding: const EdgeInsets.all(12),
+      itemCount: kProducts.length,
+      itemBuilder: (context, index) => ProductCard(product: kProducts[index]),
+    );
+  }
+
+  Widget _buildGrid() {
+    return GridView.builder(
+      padding: const EdgeInsets.all(12),
+      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 320,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 12,
+        childAspectRatio: 2.4,
+      ),
+      itemCount: kProducts.length,
+      itemBuilder: (context, index) => ProductCard(product: kProducts[index]),
     );
   }
 }
