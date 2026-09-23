@@ -1,0 +1,50 @@
+Widget tree — Toma B (agente con skill flutter-build-responsive-layout)
+Capturado vía Dart Tooling MCP (get_widget_tree, summaryOnly=true)
+Dispositivo: iPhone 17 (simulador iOS), tamaño de ventana por defecto del simulador.
+Fecha: 2026-09-21
+
+Estructura relevante (resumida):
+RootWidget
+ └─ ProductsApp
+     └─ MaterialApp
+         └─ ProductsScreen
+             └─ Scaffold
+                 ├─ LayoutBuilder            <-- presente, envuelve el body
+                 │   └─ ListView
+                 │       └─ ProductCard (x8)
+                 │           └─ Card
+                 │               └─ Padding
+                 │                   └─ Row
+                 │                       ├─ Container
+                 │                       │   └─ Icon
+                 │                       ├─ SizedBox
+                 │                       └─ Expanded
+                 │                           └─ Column
+                 │                               ├─ Text (nombre)
+                 │                               ├─ SizedBox
+                 │                               ├─ Text (descripción)
+                 │                               ├─ SizedBox
+                 │                               └─ Text (precio)
+                 └─ AppBar
+                     └─ Text ("Products")
+
+Observaciones:
+- SÍ aparece LayoutBuilder, directamente debajo de Scaffold, como padre
+  inmediato del contenido de la lista/grilla. En Toma A este nodo NO existe.
+- A este ancho de ventana (simulador de iPhone, retrato) sigue eligiendo la
+  rama ListView (constraints.maxWidth < _largeScreenMinWidth = 600.0), igual
+  que Toma A visualmente, pero la decisión ahora se toma sobre
+  `constraints.maxWidth` que entrega LayoutBuilder, no sobre
+  `MediaQuery.of(context).size.width` leído en el build() completo del widget.
+- Para ver la rama GridView con SliverGridDelegateWithMaxCrossAxisExtent haría
+  falta redimensionar la ventana del simulador (o usar macOS/Chrome) a >= 600px
+  de ancho y volver a pedir el árbol.
+
+Contraste con Toma A (evidence/toma-A/widget-tree.txt):
+- Toma A: Scaffold → ListView directo (sin LayoutBuilder).
+- Toma B: Scaffold → LayoutBuilder → ListView.
+- Diferencia estructural confirmada en el árbol de widgets, no solo en el
+  código fuente.
+
+JSON crudo completo (get_widget_tree summaryOnly=true) guardado también en:
+  evidence/toma-B/widget-tree-raw.json

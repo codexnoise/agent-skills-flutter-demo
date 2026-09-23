@@ -1,0 +1,30 @@
+Widget tree — Toma A (agente base, sin skill), plataforma WEB (Chrome/Brave)
+Capturado vía Dart Tooling MCP (get_widget_tree, summaryOnly=true)
+Ventana ~900px de ancho (mismo ancho usado para Toma B).
+Fecha: 2026-09-22
+
+Estructura relevante (resumida):
+RootWidget
+ └─ ProductsApp
+     └─ MaterialApp
+         └─ ProductsScreen
+             └─ Scaffold
+                 ├─ GridView              <-- directo, SIN LayoutBuilder
+                 │   └─ ProductCard (x8)
+                 │       └─ Card → Padding → Row → Container/Icon + Expanded/Column
+                 └─ AppBar
+
+Observación clave:
+- A ~900px, Toma A TAMBIÉN cambia a GridView (su MediaQuery.of(context).size.width
+  cruza el breakpoint de 600/900 igual que el constraints.maxWidth de Toma B).
+  Visualmente, a este ancho, Toma A y Toma B se ven IGUAL (ambas en grilla).
+- La diferencia real y consistente entre A y B no es "lista vs. grilla", sino
+  la AUSENCIA/PRESENCIA del nodo LayoutBuilder en el árbol:
+    Toma A: Scaffold → GridView (o ListView) directo.
+    Toma B: Scaffold → LayoutBuilder → GridView (o ListView).
+- Esto es coherente con el código: en este demo (una sola pantalla a pantalla
+  completa) MediaQuery.of(context).size.width y constraints.maxWidth del
+  LayoutBuilder dan el mismo valor, así que el resultado visual coincide. La
+  ventaja de LayoutBuilder (usar el ancho disponible LOCAL, no el de toda la
+  ventana) no se manifiesta visualmente en un demo sin paneles/sidebars/
+  layouts anidados — solo se ve en el árbol de widgets y en el código.

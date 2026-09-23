@@ -1,0 +1,41 @@
+Widget tree — Toma A (agente base, sin skill)
+Capturado vía Dart Tooling MCP (get_widget_tree, summaryOnly=true)
+Dispositivo: iPhone 17 (simulador iOS), tamaño de ventana por defecto del simulador.
+Fecha: 2026-09-21
+
+Estructura relevante (resumida):
+RootWidget
+ └─ ProductsApp
+     └─ MaterialApp
+         └─ ProductsScreen
+             └─ Scaffold
+                 ├─ ListView
+                 │   └─ ProductCard (x8)
+                 │       └─ Card
+                 │           └─ Padding
+                 │               └─ Row
+                 │                   ├─ Container
+                 │                   │   └─ Icon
+                 │                   ├─ SizedBox
+                 │                   └─ Expanded
+                 │                       └─ Column
+                 │                           ├─ Text (nombre)
+                 │                           ├─ SizedBox
+                 │                           ├─ Text (descripción)
+                 │                           ├─ SizedBox
+                 │                           └─ Text (precio)
+                 └─ AppBar
+                     └─ Text ("Products")
+
+Observaciones:
+- NO aparece LayoutBuilder en ningún nivel.
+- NO aparece GridView / SliverGridDelegateWithMaxCrossAxisExtent: en este ancho
+  de ventana, la rama de código elegida sigue usando ListView (el layout
+  "responsivo" de Toma A depende de MediaQuery.of(context).size.width leído en
+  build(), no de LayoutBuilder con constraints locales).
+- Estructura de widgets fija tipo lista, igual que el baseline no responsivo,
+  solo cambia lo que se dibuja dentro de cada Card según el ancho leído por
+  MediaQuery (breakpoints mágicos 600/900 duplicados, según scorecard.md).
+
+JSON crudo completo (get_widget_tree summaryOnly=true) guardado también en:
+  ~/.claude/projects/-Users-giftpoint-Documents-projects-responsive-skill-demo/510e64ae-352d-41da-aeda-639dad7bfba5/tool-results/mcp-dart-tooling-get_widget_tree-1790042633742.txt

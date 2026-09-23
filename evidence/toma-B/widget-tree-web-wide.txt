@@ -1,0 +1,21 @@
+Widget tree — Toma B (agente con skill), plataforma WEB (Chrome/Brave)
+Capturado vía Dart Tooling MCP (get_widget_tree, summaryOnly=true)
+Ventana ~900px de ancho.
+Fecha: 2026-09-22
+
+Estructura relevante (resumida):
+RootWidget
+ └─ ProductsApp
+     └─ MaterialApp
+         └─ ProductsScreen
+             └─ Scaffold
+                 ├─ LayoutBuilder
+                 │   └─ GridView          <-- a este ancho, cambia de ListView a GridView
+                 │       └─ ProductCard (x8)
+                 │           └─ Card → Padding → Row → Container/Icon + Expanded/Column
+                 └─ AppBar
+
+Comparar con evidence/toma-A/widget-tree-web-wide.txt: mismo ancho, mismo
+resultado visual (grilla), pero en A el nodo GridView cuelga directo de
+Scaffold y en B cuelga de LayoutBuilder. Ver ese archivo para el análisis
+completo del contraste.
