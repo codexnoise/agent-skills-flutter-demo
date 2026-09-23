@@ -179,7 +179,8 @@ pantalla se anida dentro de otro layout (un panel lateral, por ejemplo).
 
 ## Reproducirlo
 
-Requiere Flutter 3.44+ (Dart 3.12+).
+Requiere Flutter 3.38.1+ (Dart 3.10.0+) — la versión con la que se corrió este
+experimento.
 
 ```bash
 # Toma A — agente base
@@ -191,12 +192,17 @@ git checkout with-skill
 flutter run
 ```
 
-El skill se instaló desde el repo oficial `flutter/agent-plugins`. Con el
-[Skills CLI](https://pub.dev/packages/skills):
+El skill se instaló desde el repo oficial `flutter/agent-plugins`. En este
+experimento se usó el [Skills CLI](https://pub.dev/packages/skills) vía `npx`:
 
 ```bash
-dart run skills@ add flutter/agent-plugins
+npx skills add flutter/agent-plugins --skill flutter-build-responsive-layout --agent universal --yes
 ```
+
+> Desde **Flutter 3.44.7**, el Skills CLI 1.0 viene incluido en el SDK — ya no
+> hace falta instalarlo aparte. Con esa versión (o superior) del SDK podés
+> instalar skills directamente con `dart run skills@` sin pasar por `npx`. Más
+> detalles en el [anuncio del Skills CLI 1.0](https://dart.dev/blog/skills-cli-1-0-bundle-and-distribute-ai-agent-skills-for-your-packages).
 
 ---
 
