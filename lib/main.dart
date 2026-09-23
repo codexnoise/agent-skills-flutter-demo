@@ -98,16 +98,39 @@ class ProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isTablet = screenWidth >= 600;
+    final crossAxisCount = screenWidth >= 900
+        ? 4
+        : screenWidth >= 600
+            ? 3
+            : 1;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Products')),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(12),
-        itemCount: kProducts.length,
-        itemBuilder: (context, index) {
-          final product = kProducts[index];
-          return ProductCard(product: product);
-        },
-      ),
+      body: isTablet
+          ? GridView.builder(
+              padding: const EdgeInsets.all(12),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                mainAxisSpacing: 12,
+                crossAxisSpacing: 12,
+                childAspectRatio: 2.4,
+              ),
+              itemCount: kProducts.length,
+              itemBuilder: (context, index) {
+                final product = kProducts[index];
+                return ProductCard(product: product);
+              },
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(12),
+              itemCount: kProducts.length,
+              itemBuilder: (context, index) {
+                final product = kProducts[index];
+                return ProductCard(product: product);
+              },
+            ),
     );
   }
 }
